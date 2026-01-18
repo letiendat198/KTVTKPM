@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.forms.models import model_to_dict
 
 from bookstore.infrastructure.django_repositories.customer_repository import DjangoCustomerRepository
 from bookstore.infrastructure.django_repositories.book_repository import DjangoBookRepository
@@ -76,8 +77,17 @@ def view_cart(request):
     usecase = ViewCartUseCase(repo)
 
     result = usecase.execute(customer_id)
+    result_list = []
+    for item in result["items"]:
+        book_dict = model_to_dict(item.book)
+        item_dict = model_to_dict(item)
+        print(item_dict)
+        item_dict["book"] = book_dict
+        item_dict["subtotal"] = item.quantity * item.book.price
+
+        result_list.append(item_dict)
 
     return render(request, "cart.html", {
-        "items": result["items"],
+        "items": result_list,
         "total_price": result["total_price"]
     })
