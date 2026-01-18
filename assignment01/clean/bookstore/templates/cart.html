@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">Shopping Cart</h3>
+
+{% if items %}
+<table class="table table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Book</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.book.title }}</td>
+            <td>${{ item.book.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-end">
+    <h5>Total: <span class="text-success">${{ total_price }}</span></h5>
+</div>
+
+{% else %}
+<div class="alert alert-info">
+    Your cart is empty.
+</div>
+{% endif %}
+
+<a href="{% url 'book_list' %}" class="btn btn-secondary mt-3">
+    Continue Shopping
+</a>
+
+{% endblock %}

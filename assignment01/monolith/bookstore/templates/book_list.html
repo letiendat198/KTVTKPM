@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Book Catalog{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Book Catalog</h2>
+
+<div class="row">
+    {% for book in books %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">
+                    <strong>Author:</strong> {{ book.author }}<br>
+                    <strong>Price:</strong> ${{ book.price }}<br>
+                    <strong>Stock:</strong> {{ book.stock }}
+                </p>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <a href="{% url 'add_to_cart' book.id %}"
+                   class="btn btn-sm btn-primary w-100">
+                    Add to Cart
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <p>No books available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

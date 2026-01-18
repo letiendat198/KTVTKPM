@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Your Cart</h2>
+
+{% if items %}
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Book</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.book.title }}</td>
+            <td>${{ item.book.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.book.price|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-end">
+    <h4>Total: ${{ total_price }}</h4>
+</div>
+
+{% else %}
+<div class="alert alert-info">
+    Your cart is empty.
+</div>
+{% endif %}
+{% endblock %}
