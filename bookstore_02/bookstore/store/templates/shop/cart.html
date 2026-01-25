@@ -1,0 +1,35 @@
+{% extends "shop/base.html" %}
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Your Cart</h3>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Book</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.book.title }}</td>
+            <td>{{ item.book.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.book.price|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">Cart is empty</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'checkout' %}" class="btn btn-success mt-3">
+    Proceed to Checkout
+</a>
+{% endblock %}

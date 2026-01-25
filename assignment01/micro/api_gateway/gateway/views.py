@@ -88,7 +88,7 @@ def cart(request):
                 books.append({
                     "book": book_data["book"],
                     "quantity": item["cart"],
-                    "subtotal": int(item["cart"]) * int(book_data["book"]["price"])
+                    "subtotal": int(item["cart"]) * float(book_data["book"]["price"])
                 })
 
         cart_data = {

@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+{% block title %}Add To Cart{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Add Book To Cart</h3>
+
+<form method="post" action="/cart/add/" class="w-50">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Customer ID</label>
+        <input type="text" name="customer_id" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Book ID</label>
+        <input type="number" name="book_id" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input type="number" name="quantity" class="form-control" min="1" required>
+    </div>
+
+    <button class="btn btn-success">Add To Cart</button>
+</form>
+{% endblock %}

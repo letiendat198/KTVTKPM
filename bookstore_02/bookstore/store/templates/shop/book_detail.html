@@ -1,0 +1,48 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3>{{ book.title }}</h3>
+
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Price:</strong> {{ book.price }}</p>
+    <p><strong>Stock:</strong> {{ book.stock }}</p>
+
+    <hr>
+
+    <p>
+        Average rating:
+        {% if avg_rating %}
+            {{ avg_rating|floatformat:1 }}/5
+        {% else %}
+            No ratings yet
+        {% endif %}
+    </p>
+
+    {% if user_rating %}
+        <p>Your rating: {{ user_rating.score }}/5</p>
+    {% endif %}
+
+    <div class="d-flex gap-2 mb-3">
+        <form method="post" action="{% url 'add_book_to_cart' book.id %}">
+            {% csrf_token %}
+            <button class="btn btn-success">
+                Add to cart
+            </button>
+        </form>
+        {% if request.session.customer_id %}
+        <a href="{% url 'rate_book' book.id %}"
+           class="btn btn-outline-primary">
+            {% if user_rating %}Edit rating{% else %}Rate this book{% endif %}
+        </a>
+        {% else %}
+            <p>Please login to rate this book.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'book_list' %}">Back to book list</a>
+
+</div>
+{% endblock %}

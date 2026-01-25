@@ -1,0 +1,73 @@
+{% extends "shop/base.html" %}
+{% block title %}Import Book{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Staff – Import Book to Inventory</h3>
+
+{% for message in messages %}
+<div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+
+<div class="row">
+    <!-- Nhập sách mới -->
+    <div class="col-md-6">
+        <h5>Add New Book</h5>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="new">
+
+            <div class="mb-2">
+                <input class="form-control" name="title" placeholder="Title" required>
+            </div>
+
+            <div class="mb-2">
+                <input class="form-control" name="author" placeholder="Author" required>
+            </div>
+
+            <div class="mb-2">
+                <input type="number" step="0.01" class="form-control"
+                       name="price" placeholder="Price" required>
+            </div>
+
+            <div class="mb-2">
+                <input type="number" class="form-control"
+                       name="stock" placeholder="Initial Stock" required>
+            </div>
+
+            <div class="mb-2">
+                <select name="category" class="form-select" required>
+                    {% for c in categories %}
+                    <option value="{{ c.id }}">{{ c.type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="btn btn-primary">Add Book</button>
+        </form>
+    </div>
+
+    <!-- Nhập thêm stock -->
+    <div class="col-md-6">
+        <h5>Import Existing Book</h5>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="existing">
+
+            <div class="mb-2">
+                <select name="book_id" class="form-select" required>
+                    {% for b in books %}
+                    <option value="{{ b.id }}">{{ b.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <input type="number" class="form-control"
+                       name="quantity" placeholder="Quantity" required>
+            </div>
+
+            <button class="btn btn-success">Import Stock</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
